@@ -1,0 +1,39 @@
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+
+router = APIRouter()
+
+
+class Broadcaster:
+    def __init__(self):
+        self.active: list[WebSocket] = []
+
+    async def connect(self, ws: WebSocket):
+        await ws.accept()
+        self.active.append(ws)
+
+    def disconnect(self, ws: WebSocket):
+        if ws in self.active:
+            self.active.remove(ws)
+
+    async def broadcast(self, message: dict):
+        dead = []
+        for ws in self.active:
+            try:
+                await ws.send_json(message)
+            except Exception:
+                dead.append(ws)
+        for ws in dead:
+            self.disconnect(ws)
+
+
+broadcaster = Broadcaster()
+
+
+@router.websocket("/ws")
+async def ws_endpoint(ws: WebSocket):
+    await broadcaster.connect(ws)
+    try:
+        while True:
+            await ws.receive_text()    # 保持连接；前端无需发什么
+    except WebSocketDisconnect:
+        broadcaster.disconnect(ws)

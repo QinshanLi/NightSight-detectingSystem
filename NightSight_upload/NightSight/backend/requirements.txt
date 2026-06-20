@@ -1,0 +1,14 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+pydantic==2.7.0
+pydantic-settings==2.2.1
+SQLAlchemy==2.0.30
+PyMySQL==1.1.1
+cryptography==42.0.7          # PyMySQL 加密握手
+python-multipart==0.0.9
+paho-mqtt==2.1.0              # ESP32 联动（先模拟，真发时启用）
+# ---- 推理依赖（有 GPU 时安装）----
+torch>=2.1                    # 按 CUDA 版本到 pytorch.org 选对应轮子
+torchvision>=0.16
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
