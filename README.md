@@ -1,4 +1,3 @@
-<img width="2482" height="1251" alt="image" src="https://github.com/user-attachments/assets/4c0c8119-2e4f-49d0-b443-489448a6af8d" /># NightSight-detectingSystem
 # AIoT Low-Light Risk Event Stream System
 
 ## 📌 Project Overview
